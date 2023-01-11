@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="">Sophos Bank App!</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Clients
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/users/create">Create a client</a></li>
+              <li><a class="dropdown-item" href="/users/">Show all clients</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/users/modify">Modify a client information</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             Products
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/product/create">Create a product</a></li>
+              <li><a class="dropdown-item" href="/product/list-product-by-client">Show your products</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/product/modify">Modify your products</a></li>
+              <li><a class="dropdown-item" href="/product/list-transaction-by-product">Your account status</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             Transactions
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="/transactions/withdraw">Make a cash withdraw</a></li>
+              <li><a class="dropdown-item" href="/transactions/deposit">Make a deposit</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/transactions/transfer">Make a transfer</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

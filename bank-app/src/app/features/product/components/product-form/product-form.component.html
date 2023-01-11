@@ -1,0 +1,29 @@
+<div class="container">
+  <div> is modify {{isModify}}</div>
+
+  <form (submit)="send()" [formGroup]="form" >
+    <div class="col-md-4">
+      <label for="validationDefault01" class="form-label requested-info">Client ID</label>
+      <input type="number" class="form-control" id="validationDefault01" formControlName="clientId" >
+    </div>
+    <button class="search" *ngIf="isModify" (click)="search()">search product</button>
+    <div class="mb-3">
+      <label  class="form-label requested-info">Account type</label>
+      <select class="form-select" aria-label="Default select example" formControlName="accountType">
+        <option selected>Choose an account</option>
+        <option value="CHECKING">Checking</option>
+        <option value="SAVINGS">Savings</option>
+      </select>
+    </div>
+    <label  class="form-label requested-info">GMF Exempt</label>
+    <div class="form-check">
+      <input type="radio" class="form-check-input" id="validationFormCheck2" name="GMF" [value]="true"  formControlName="GMF">
+      <label class="form-check-label" for="validationFormCheck2">Yes</label>
+    </div>
+    <div class="form-check mb-3">
+      <input type="radio" class="form-check-input" id="validationFormCheck3" name="GMF" [value]="false"   formControlName="GMF">
+      <label class="form-check-label" for="validationFormCheck3">No</label>
+    </div>
+    <button type="submit" class="btn btn-primary" >Create account</button>
+  </form>
+</div>

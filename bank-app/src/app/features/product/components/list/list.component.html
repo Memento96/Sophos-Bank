@@ -1,0 +1,17 @@
+<div class="container list-container">
+
+  <div class="table table-hover">
+    <div class="column">
+      <div class="tittle col" *ngFor="let a of columnsName">
+        {{a}}
+      </div>
+    </div>
+  <div class="divider"></div>
+    <div class="row" *ngFor="let item of list">
+      <div class="item" *ngFor="let a of columnsName, let i = index">
+        {{addItem(item, a, i)}}
+      </div>
+    </div>
+  </div>
+
+</div>

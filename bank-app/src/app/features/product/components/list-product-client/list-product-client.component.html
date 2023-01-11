@@ -1,0 +1,9 @@
+<div class="list-product-by-client">
+  <form (submit)="getProductId()" [formGroup]="form">
+  <input type="text" formControlName="productId">
+  <button type="submit">Look foor product transactions</button>
+  </form>
+  <ng-container *ngIf="list$ | async as list">
+    <app-list [list]="list" ></app-list>
+  </ng-container>
+</div>

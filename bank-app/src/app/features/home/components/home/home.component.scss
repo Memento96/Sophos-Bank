@@ -1,0 +1,138 @@
+.main {
+    display: flex;
+    width: 90%;
+    margin: auto;
+    height: 100%;
+  }
+  
+  .main-aside {
+    width: 50vh;
+    height: 82vh;
+    color: black;
+  }
+  
+  .main-aside img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .text-inside_image {
+    position: relative;
+    margin-top: -96%;
+    left: 25%;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 8px;
+    width: 50%;
+    color: white;
+  
+  }
+  
+  .main-section {
+      margin-left: 1em;
+      margin-top: 1em;
+      width: 100%;
+      display: flex;
+      flex-direction: column;   
+  }
+  
+  .section-content {
+      padding: 0.8% 25%;
+      list-style: none;
+      text-decoration: none;
+      font-family: 'Press Start 2P', cursive;
+      font-size: .85em;
+  }
+  
+  .content {
+      color: rgb(149, 143, 143);
+  }
+  
+  .description {
+      color: rgb(119, 115, 115);
+  }
+
+  .main-header {
+    height: 6em;
+    width: 100%;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(
+      338deg,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(92, 92, 224, 1) 51%,
+      rgba(0, 212, 255, 1) 100%
+    );
+    display: flex;
+    flex-direction: row;
+    border-style: none;
+  }
+  
+  .icon-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: transparent;
+  }
+  
+  .icon-title img {
+    margin-left: 10px;
+    width: 4em;
+  }
+  .icon-title h3 {
+    font-family: "Bebas Neue", cursive;
+    font-size: x-large;
+    color: #17203a;
+    margin-left: 0.5em;
+  }
+  
+  .info-menu {
+    background-color: transparent;
+    height: 100%;
+    width: 900px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  
+  .pub {
+    margin-top: 1em;
+    margin-left: 15px;
+    width: fit-content;
+    height: 3.5em;
+    border-radius: 5px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    padding: 0px 10px;
+    transition: all 0.5s linear;
+  }
+  
+  .pub h4 {
+    width: fit-content;
+    background-color: transparent;
+    font-family: "Comfortaa", cursive;
+    color: rgb(0, 0, 0);
+    font-weight: lighter;
+  }
+  
+  .pub img {
+    margin-top: 3px;
+    margin-left: 5px;
+    width: 15px;
+    height: 15px;
+    background-color: transparent;
+  }
+  
+  .on h4 {
+    color: #fff;
+  }
+  
+  .pub:hover,
+  .on {
+    background-color: #152c35;
+    cursor: pointer;
+  }
+  
+  .pub:hover h4 {
+    color: white;
+  }

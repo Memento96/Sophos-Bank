@@ -1,0 +1,7 @@
+<div class=" list-transaction-by-product">
+
+    <ng-container *ngIf="list$ | async as list">
+        <app-list [list]="list" ></app-list>
+    </ng-container>
+
+</div>

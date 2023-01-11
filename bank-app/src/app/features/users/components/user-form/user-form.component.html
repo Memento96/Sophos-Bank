@@ -1,0 +1,16 @@
+<!--<input type="x" class="search">-->
+<!--<button class="search"></button>-->
+
+
+
+<form [formGroup]="form" (submit)="send()">
+
+  <select class="id-type" formControlName="idType"></select>
+  <input type="text" class="id-number" formControlName="idNumber">
+  <input type="text" class="name" formControlName="name">
+  <input type="text" class="last-name" formControlName="lastName">
+  <input type="text" class="email" formControlName="email">
+  <input type="text" class="date-of-birth" formControlName="dataOfBirth">
+  <button class="create" type="submit">send</button>
+
+</form>
