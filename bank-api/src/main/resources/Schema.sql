@@ -5,3 +5,4 @@ alter table product add constraint FKPRODUCT_X_CLIENT foreign key (account_creat
 alter table transaction add constraint FKTRANSACTION_RECIPENT_ID foreign key (recipient_id) references product (product_id);
 alter table transaction add constraint FKTRANSACTION_SENDER_ID foreign key (sender_id) references product (product_id);
 alter table client add column creation_date date
+alter table client add column is_deleted bool
