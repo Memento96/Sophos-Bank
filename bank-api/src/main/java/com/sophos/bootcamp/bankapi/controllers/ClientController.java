@@ -1,5 +1,7 @@
 package com.sophos.bootcamp.bankapi.controllers;
 
+import com.sophos.bootcamp.bankapi.dtos.ClientProductDto;
+import com.sophos.bootcamp.bankapi.dtos.ProductDto;
 import com.sophos.bootcamp.bankapi.dtos.UpdateClientDto;
 import com.sophos.bootcamp.bankapi.entities.Client;
 import com.sophos.bootcamp.bankapi.entities.Product;
@@ -47,16 +49,14 @@ public class ClientController {
     }
 
     @GetMapping("/{id}/product")
-    public ResponseEntity<List<Product>> getProductByClientId(@PathVariable Long id) {
+    public ResponseEntity<List<ProductDto>> getProductByClientId(@PathVariable Long id) {
         List<Product> allProductsByClientId = productService.getAllProductsByClientId(id);
-        return new ResponseEntity<>(allProductsByClientId, HttpStatus.OK);
+        List<ProductDto> filteredProductJson = ClientProductDto.mapToDto(allProductsByClientId);
+        return new ResponseEntity<>(filteredProductJson, HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity<Client> modifyClient(@RequestBody UpdateClientDto client) {
-        if (client.getId() == null) {
-            throw new BadRequestException("Please, do not provide an ID number, this has already been automatically created by the system");
-        }
         Client modifiedClient = clientService.modifyClient(client.mapToDto());
         return new ResponseEntity<>(modifiedClient, HttpStatus.OK);
     }

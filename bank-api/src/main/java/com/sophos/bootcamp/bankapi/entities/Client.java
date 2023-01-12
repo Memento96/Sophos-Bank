@@ -1,5 +1,6 @@
 package com.sophos.bootcamp.bankapi.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.hibernate.annotations.Where;
 
@@ -34,6 +35,7 @@ public class Client {
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "creation_date")
     private LocalDate creationDate;
 
@@ -43,6 +45,7 @@ public class Client {
     @Column(name = "modification_date")
     private Date modificationDate;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "modification_user")
     private String modificationUser;
 

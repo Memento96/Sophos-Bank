@@ -12,6 +12,9 @@ export class ProductFormComponent implements OnInit {
 
   @Input()
   isModify = false;
+  
+  @Input()
+  product: any
 
   @Output() formData: EventEmitter<any> = new EventEmitter();
 
@@ -21,10 +24,12 @@ export class ProductFormComponent implements OnInit {
               private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    console.log
     this.form = this.fb.group({
-      clientId: [''],
-      accountType: [''],
-      GMF: [true]
+      productId: [this.product ? this.product.id : ''],
+      accountType: [this.product ? this.product.accountType : ''],
+      accountStatus: [this.product ? this.product.accountStatus : ''],
+      GMF: [this.product ? this.product.gmfExempt : '']
     });
   }
 

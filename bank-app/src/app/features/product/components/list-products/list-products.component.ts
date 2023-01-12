@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { ProductsService } from '../../../../core/services/products.service';
 
 
@@ -9,17 +11,28 @@ import { ProductsService } from '../../../../core/services/products.service';
 })
 export class ListTransactionsByProductsComponent implements OnInit {
 
-  list$ = this.productService.getProductsByClient('tt')
+//This is the list of transactions by product
+
+  list$: Observable<any>;
+  
+  formTransactionsByProduct: FormGroup;
 
 
-  constructor(private productService: ProductsService) { }
+  constructor(private productService: ProductsService,
+              private fb: FormBuilder) { }
 
   ngOnInit(): void {
 
-    // this.productService.getProductsByClient('tst').subscribe(list=> {});
+    this.formTransactionsByProduct = this.fb.group({
+      productTransactionId: ['']
+    })
 
   }
 
+  getTransactionsByProduct(): void{
+    const id = this.formTransactionsByProduct.value
+    this.list$ = this.productService.getTransactionByProduct(id.productTransactionId);
+  }
 
 
 }

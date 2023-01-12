@@ -53,7 +53,6 @@ public class TransactionServiceImplementation implements TransactionService {
         } else throw new BadRequestException("Transaction not supported");
     }
 
-    //TODO make the CREDIT movement type show for the recipient and DEBIT for the sender
     @Override
     public List<Transaction> listOfTransactions(Long id) {
         productRepository.findById(id).orElseThrow(() -> new NotFoundException("This account does not exist"));

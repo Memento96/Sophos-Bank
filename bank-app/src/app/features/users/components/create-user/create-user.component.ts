@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ProductsService } from 'src/app/core/services/products.service';
 
 @Component({
   selector: 'app-create-user',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateUserComponent implements OnInit {
 
-  constructor(http: HttpClient) { }
+  constructor(private productService: ProductsService) { }
 
   ngOnInit(): void {
     
@@ -16,7 +17,15 @@ export class CreateUserComponent implements OnInit {
 
   create(data:any){
 
-    console.log(data)
+      this.productService.createClient(data).subscribe({
+            next: () => {
+              console.log("I worked")
+            },
+            error: (e) => {
+              console.log(e.error.error);
+            },
+            complete: () => console.log('done'),
+          });
 
   }
 

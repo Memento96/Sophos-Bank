@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.util.Date;
 
-//TODO create this DTO
 @Data
 public class UpdateClientDto {
 

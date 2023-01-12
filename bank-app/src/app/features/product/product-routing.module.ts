@@ -24,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: 'list-transaction-by-product',
-    component: ListProductClientComponent
+    component: ListProductsComponent
   },
 
   ];

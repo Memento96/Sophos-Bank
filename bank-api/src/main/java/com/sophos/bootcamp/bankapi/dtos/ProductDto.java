@@ -1,5 +1,6 @@
 package com.sophos.bootcamp.bankapi.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sophos.bootcamp.bankapi.entities.Client;
 import com.sophos.bootcamp.bankapi.entities.Product;
 import com.sophos.bootcamp.bankapi.entities.enums.AccountStatus;
@@ -28,8 +29,10 @@ public class ProductDto {
 
     private Boolean gmfExempt;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date creationDate;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date modificationDate;
 
     private String modificationUser;

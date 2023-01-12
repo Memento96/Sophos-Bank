@@ -8,7 +8,7 @@ import java.util.Date;
 @Data
 public class TransactionResultDto {
 
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date transactionDate;
 
     private String transactionType;

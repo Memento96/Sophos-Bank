@@ -1,3 +1,5 @@
 <div class="users-list">
-  <app-list></app-list>
+  <ng-container *ngIf="list$ | async as list">
+    <app-list [list]="list"></app-list>
+  </ng-container>
 </div>

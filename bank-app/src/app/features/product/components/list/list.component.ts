@@ -12,7 +12,6 @@ export class ListComponent implements  OnInit, OnDestroy {
 
   columnsName: any[]
 
-
   constructor() { }
 
   ngOnInit(): void {

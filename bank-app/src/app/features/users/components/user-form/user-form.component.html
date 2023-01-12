@@ -5,12 +5,19 @@
 
 <form [formGroup]="form" (submit)="send()">
 
-  <select class="id-type" formControlName="idType"></select>
-  <input type="text" class="id-number" formControlName="idNumber">
-  <input type="text" class="name" formControlName="name">
-  <input type="text" class="last-name" formControlName="lastName">
-  <input type="text" class="email" formControlName="email">
-  <input type="text" class="date-of-birth" formControlName="dataOfBirth">
-  <button class="create" type="submit">send</button>
+  <select class="id-type" formControlName="idType">
+    <option value="" selected>Select an ID type</option>
+    <option value="CC">CC</option>
+    <option value="CE">CE</option>
+    <option value="NIT">NIT</option>
+  </select>
+  <input type="text" class="id-number" formControlName="idNumber" placeholder="enter your ID number">
+  <input type="text" class="name" formControlName="name" placeholder="enter your name">
+  <input type="text" class="last-name" formControlName="lastName" placeholder="enter your last name">
+  <input type="email" class="email" formControlName="email" placeholder="enter your email address">
+  <input type="date" class="date-of-birth" formControlName="dataOfBirth" placeholder="date of birth">
+  <button class="create" type="submit">Send</button>
 
 </form>
+
+
