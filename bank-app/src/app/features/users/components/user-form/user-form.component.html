@@ -1,23 +1,39 @@
-<!--<input type="x" class="search">-->
-<!--<button class="search"></button>-->
-
-
-
-<form [formGroup]="form" (submit)="send()">
-
-  <select class="id-type" formControlName="idType">
-    <option value="" selected>Select an ID type</option>
-    <option value="CC">CC</option>
-    <option value="CE">CE</option>
-    <option value="NIT">NIT</option>
-  </select>
-  <input type="text" class="id-number" formControlName="idNumber" placeholder="enter your ID number">
-  <input type="text" class="name" formControlName="name" placeholder="enter your name">
-  <input type="text" class="last-name" formControlName="lastName" placeholder="enter your last name">
-  <input type="email" class="email" formControlName="email" placeholder="enter your email address">
-  <input type="date" class="date-of-birth" formControlName="dataOfBirth" placeholder="date of birth">
-  <button class="create" type="submit">Send</button>
-
-</form>
+<div class="container">
+  <form [formGroup]="form" (submit)="send()">
+    <div class="mb-3">
+      <label for="validationDefault01" class="form-label requested-info">ID type</label>
+      <select class="form-select" aria-label="Default select example" formControlName="idType">
+        <option value="" selected>Select an ID type</option>
+        <option value="CC">CC</option>
+        <option value="CE">CE</option>
+        <option value="NIT">NIT</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label for="validationDefault01" class="form-label requested-info">Provide client ID number (CC, CE or NIT)</label>
+      <input type="text" class="id-number form-control" formControlName="idNumber" placeholder="ID number">
+    </div>
+    <div class="col-md-4">
+      <label for="validationDefault01" class="form-label requested-info">Provide client's name</label>
+      <input type="text" class="name form-control" formControlName="name" placeholder="Name">
+    </div>
+    <div class="col-md-4">
+      <label for="validationDefault01" class="form-label requested-info">Provide client's last name</label>
+      <input type="text" class="last-name form-control" formControlName="lastName" placeholder="Last name">
+    </div>
+    <div class="col-md-4">
+      <label for="validationDefault01" class="form-label requested-info">Provide client's email address</label>
+      <input type="email" class="email form-control" formControlName="email" placeholder="Email address">
+    </div>
+    <div class="col-md-4">
+      <label for="validationDefault01" class="form-label requested-info">Provide client's DOB</label>
+      <input type="date" class="date-of-birth form-control" formControlName="dataOfBirth" placeholder="date of birth">
+    </div>
+    <br>
+    <div class="col-md-4">
+      <button class="create btn btn-primary" type="submit">Send</button>
+    </div>
+  </form>
+</div>
 
 

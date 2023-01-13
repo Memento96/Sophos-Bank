@@ -1,4 +1,5 @@
 <div class="container">
+    <p class="h1">Make a deposit</p>
     <form (submit)="send()" [formGroup]="form">
         <div class="col-md-4">
             <label for="validationDefault01" class="form-label requested-info requested-info" >Recipient Account ID</label>
@@ -6,12 +7,13 @@
         </div>
         <div class="col-md-4">
             <label for="validationDefault01" class="form-label requested-info requested-info" >Description</label>
-            <textarea name="" id="" cols="30" rows="10" placeholder="Write the transactions description" formControlName="description"></textarea>
+            <textarea name="" id="" class="form-control" cols="30" rows="10" placeholder="Write the transaction's description" formControlName="description"></textarea>
         </div>
         <div class="col-md-4">
             <label for="validationDefault01" class="form-label requested-info requested-info">Deposit amount</label>
             <input type="number" class="form-control" id="validationDefault01" required formControlName="transactionAmount">
         </div>
+        <br>
         <button type="submit" class="btn btn-primary">Complete deposit</button>
     </form>
 </div>

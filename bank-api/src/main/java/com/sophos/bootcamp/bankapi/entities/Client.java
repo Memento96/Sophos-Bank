@@ -42,10 +42,11 @@ public class Client {
     @Column(name = "client_creator")
     private String clientCreator;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name = "modification_date")
     private Date modificationDate;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+
     @Column(name = "modification_user")
     private String modificationUser;
 

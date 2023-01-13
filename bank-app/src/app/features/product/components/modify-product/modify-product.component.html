@@ -1,8 +1,11 @@
-<div class="modify-product">
+<div class="modify-product container">
+  <p class="h1">Modify a product</p>
   <form (submit)="getProductById()" [formGroup]="form">
-    <input type="text" formControlName="productId">
-    <button type="submit">Look for product to modify</button>
+    <input type="text" class="form-control" formControlName="productId" placeholder="Provide product ID">
+    <br>
+    <button type="submit" class="btn btn-primary">Look for product to modify</button>
   </form>
+  <br>
   <ng-container *ngIf="product$ | async as product">
     <app-product-form [isModify]="true" (formData)="modify($event)" [product]="product"></app-product-form>
   </ng-container>

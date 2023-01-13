@@ -1,10 +1,11 @@
-<div class=" list-transaction-by-product">
+<div class=" list-transaction-by-product container">
+    <p class="h1">Show transactions by product</p>
     <form (submit)="getTransactionsByProduct()" [formGroup]="formTransactionsByProduct">
-        <input type="text" formControlName="productTransactionId">
-        <button type="submit">Look foor product transactions</button>
+        <input type="text" class="form-control" formControlName="productTransactionId">
+        <br>
+        <button type="submit" class="btn btn-primary">Look for this product's transactions</button>
     </form>
     <ng-container *ngIf="list$ | async as list">
         <app-list [list]="list" ></app-list>
     </ng-container>
-
 </div>

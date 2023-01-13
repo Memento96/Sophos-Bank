@@ -83,7 +83,7 @@ public class ProductServiceImplementation implements ProductService {
         Product productExists = productRepository.findById(product.getId()).orElseThrow(()
                 -> new NotFoundException("Product is not in system"));
         if (CANCELLED.equals(productExists.getAccountStatus())){
-            throw new BadRequestException("This account can not be modified as it has already been already cancelled");
+            throw new BadRequestException("This account can not be modified as it has already been cancelled");
         }
         if (CANCELLED.equals(product.getAccountStatus()) && (productExists.getBalance() < 0 || productExists.getBalance() > 1)) {
             throw new BadRequestException("Account can not be closed as it has a balance");

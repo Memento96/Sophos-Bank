@@ -32,7 +32,7 @@ export class ModifyUserComponent implements OnInit {
     const id = this.form.get('clientId')?.value
     this.productService.modifyClient(data, id).subscribe({
       next: () => {
-        console.log("I worked")
+        console.log("Client has been successfuly modified")
       },
       error: (e) => {
         console.log(e.error.error);

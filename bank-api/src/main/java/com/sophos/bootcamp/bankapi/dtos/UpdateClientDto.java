@@ -1,5 +1,6 @@
 package com.sophos.bootcamp.bankapi.dtos;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sophos.bootcamp.bankapi.entities.Client;
 import lombok.Data;
 
@@ -16,6 +17,7 @@ public class UpdateClientDto {
 
     private String emailAddress;
 
+    @JsonFormat(pattern = "dd/MM/yyyy")
     private Date modificationDate;
 
     public Client mapToDto(){

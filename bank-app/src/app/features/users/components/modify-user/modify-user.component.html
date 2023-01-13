@@ -1,10 +1,14 @@
-<div class="modify-user">
+<div class="modify-user container">
+  <p class="h1">Modify client</p>
   <form (submit)="getClientById()" [formGroup]="form">
-    <input type="text" formControlName="clientId">
-    <button type="submit">Look for client to modify</button>
+    <input type="text" class="form-control" formControlName="clientId" placeholder="Provide client ID">
+    <br>
+    <button class="btn btn-primary" type="submit">Look for client to modify</button>
   </form>
+  <br>
   <ng-container *ngIf="user$ | async as user">
     <app-user-form (formData)="modify($event)" [client]="user"></app-user-form>
-    <button type="button" (click)="delete()">Delete</button>
+    <br>
+    <button class="btn btn-danger" type="button" (click)="delete()">Delete</button>
   </ng-container>
 </div>
