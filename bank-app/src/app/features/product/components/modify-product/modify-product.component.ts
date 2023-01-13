@@ -31,12 +31,14 @@ export class ModifyProductComponent implements OnInit {
   modify(data: any){
     this.productService.modifyProduct(data).subscribe({
       next: () => {
-        console.log("I worked")
+        console.log("Product has been modified")
       },
       error: (e) => {
         console.log(e.error.error);
       },
-      complete: () => console.log('done'),
+      complete: () => {console.log('done');
+      this
+    },
     });
   }
 

@@ -61,8 +61,15 @@ export class ProductsService {
 
 
   createProduct (params: any):Observable<any>{
+    const body = {
+      accountCreator: params.clientId,
+      accountType: params.accountType,
+      accountStatus: params.accountStatus,
+      gmfExempt: params.GMF
+  }
+    console.log(params)
 
-    return this.http.post(`${environment.apiUrl}/product`, params)
+    return this.http.post(`${environment.apiUrl}/product`, body)
 
   }
 

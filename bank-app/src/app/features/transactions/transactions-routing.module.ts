@@ -1,11 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TransactionFormComponent } from './components/transaction-form/transaction-form.component';
+import { DepositComponent } from './components/deposit/deposit.component';
+import { TransferComponent } from './components/transfer/transfer.component';
+import { WithdrawalComponent } from './components/withdrawal/withdrawal.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: TransactionFormComponent
+    path: 'deposit',
+    component: DepositComponent
+  },
+  {
+    path: 'transfer',
+    component: TransferComponent
+  },
+  {
+    path: 'withdrawal',
+    component: WithdrawalComponent
   }
 ];
 

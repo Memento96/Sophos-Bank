@@ -1,0 +1,21 @@
+<div class="container">
+    <form (submit)="send()" [formGroup]="form">
+        <div class="col-md-4">
+            <label for="validationDefault01" class="form-label requested-info requested-info">Recipient Account ID</label>
+            <input type="number" class="form-control" id="validationDefault01" required formControlName="recipient">
+        </div>
+        <div class="col-md-4">
+            <label for="validationDefault01" class="form-label requested-info requested-info">Sender Account ID</label>
+            <input type="number" class="form-control" id="validationDefault01" required formControlName="sender">
+        </div>
+        <div class="col-md-4">
+            <label for="validationDefault01" class="form-label requested-info requested-info" >Description</label>
+            <textarea name="" id="" cols="30" rows="10" placeholder="Write the transactions description" formControlName="description"></textarea>
+        </div>
+        <div class="col-md-4">
+            <label for="validationDefault01" class="form-label requested-info requested-info">Transfer amount</label>
+            <input type="number" class="form-control" id="validationDefault01" required formControlName="transactionAmount">
+        </div>
+        <button type="submit" class="btn btn-primary">Complete transfer</button>
+    </form>
+</div>

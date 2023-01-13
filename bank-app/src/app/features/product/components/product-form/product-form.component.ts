@@ -26,6 +26,7 @@ export class ProductFormComponent implements OnInit {
   ngOnInit(): void {
     console.log
     this.form = this.fb.group({
+      clientId: [''],
       productId: [this.product ? this.product.id : ''],
       accountType: [this.product ? this.product.accountType : ''],
       accountStatus: [this.product ? this.product.accountStatus : ''],
