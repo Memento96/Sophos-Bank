@@ -1,5 +1,10 @@
-<div class="created-product">
+<div class="created-product container">
   <p class="h1">Create a product</p>
   <p class="h6">remember all savings accounts are ACTIVE by default at the moment of creation</p>
+  <br>
   <app-product-form [isModify]="false" (formData)="create($event)"></app-product-form>
+  <br>
+  <div class="alert alert-danger" role="alert" *ngIf="error?.error.message">
+    <span >{{error?.error.message}}</span>
+  </div>
 </div>

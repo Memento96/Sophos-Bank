@@ -1,6 +1,4 @@
 <div class="container">
-  <!-- <div> is modify {{isModify}}</div> -->
-
   <form (submit)="send()" [formGroup]="form" >
     <div class="col-md-4" *ngIf="!isModify">
       <label for="validationDefault01" class="form-label requested-info">Provide client ID</label>
@@ -32,6 +30,12 @@
       <input type="radio" class="form-check-input" id="validationFormCheck3" name="GMF" [value]="false"   formControlName="GMF">
       <label class="form-check-label" for="validationFormCheck3">No</label>
     </div>
-    <button type="submit" class="btn btn-primary">{{isModify ? 'Modify' : 'Create'}}</button>
+    <div class="col-md-4">
+      <button type="submit" class="btn btn-primary">Send</button>
+    </div>
+    <br>
+    <div class="col-md-4">
+      <button type="button" (click)="resetForm()" class="reset-button btn btn-warning">Reset form</button>
+    </div>
   </form>
 </div>

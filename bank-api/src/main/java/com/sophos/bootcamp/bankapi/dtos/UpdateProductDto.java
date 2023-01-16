@@ -4,7 +4,10 @@ package com.sophos.bootcamp.bankapi.dtos;
 import com.sophos.bootcamp.bankapi.entities.Product;
 import com.sophos.bootcamp.bankapi.entities.enums.AccountStatus;
 import com.sophos.bootcamp.bankapi.exceptions.BadRequestException;
+import com.sophos.bootcamp.bankapi.utils.BankUtils;
 import lombok.Data;
+
+import static com.sophos.bootcamp.bankapi.utils.BankUtils.getAvailableBalance;
 
 @Data
 public class UpdateProductDto {

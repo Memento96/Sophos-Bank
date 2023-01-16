@@ -6,6 +6,7 @@ import com.sophos.bootcamp.bankapi.entities.Product;
 import com.sophos.bootcamp.bankapi.entities.enums.AccountStatus;
 import com.sophos.bootcamp.bankapi.entities.enums.AccountType;
 import com.sophos.bootcamp.bankapi.exceptions.BadRequestException;
+import com.sophos.bootcamp.bankapi.utils.BankUtils;
 import lombok.Data;
 
 import java.util.Date;
@@ -43,13 +44,16 @@ public class ProductDto {
         clientCreator.setId(accountCreator);
         product.setAccountCreator(clientCreator);
         product.setAccountType(getAccountType(accountType));
+        product.setGmfExempt(gmfExempt);
         if (product.getAccountType().equals(AccountType.SAVINGS)) {
             product.setAccountStatus(AccountStatus.ACTIVE);
         } else {
             product.setAccountStatus(getAccountStatus(accountStatus));
         }
+        if (product.getAccountType().equals(AccountType.CHECKING)){
+            product.setAvailableBalance(BankUtils.getAvailableBalance(0.0, product.getGmfExempt(), product.getAccountType()));
+        }
         product.setModificationUser("admin");
-        product.setGmfExempt(gmfExempt);
         return product;
     }
 

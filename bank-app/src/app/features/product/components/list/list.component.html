@@ -6,14 +6,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let item of list">
-      <td scope="row"class="item" *ngFor="let a of columnsName, let i = index">{{addItem(item, a, i)}}</td>
+      <td scope="row"class="item" *ngFor="let a of columnsName, let i = index"><span [ngClass]="item.gmfExempt == true && i == 7 ? 'red' : ''">{{addItem(item, i)}}</span></td>
     </tr>
   </tbody>
-  <!-- <div class="divider"></div>
-    <div class="row" *ngFor="let item of list">
-      <div class="item" *ngFor="let a of columnsName, let i = index">
-        {{addItem(item, a, i)}}
-      </div>
-    </div>
-  </div> -->
 </table>

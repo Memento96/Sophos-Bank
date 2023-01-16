@@ -4,6 +4,10 @@
         <input type="text" class="form-control" formControlName="productTransactionId">
         <br>
         <button type="submit" class="btn btn-primary">Look for this product's transactions</button>
+        <br>
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
     </form>
     <ng-container *ngIf="list$ | async as list">
         <app-list [list]="list" ></app-list>

@@ -68,9 +68,9 @@ public class TransactionServiceImplementation implements TransactionService {
         transaction.setModificationDate(new Date());
         Double transactionAmount = transaction.getTransactionAmount();
 
-        transactionAmount = getGmfCalculator(transactionAmount, productSender.getGmfExempt());
+        Double transactionAmountWithGmf = getGmfCalculator(transactionAmount, productSender.getGmfExempt());
 
-        Double senderBalanceModified = productSender.getBalance() - transactionAmount;
+        Double senderBalanceModified = productSender.getBalance() - transactionAmountWithGmf;
         Double recipientBalanceModified = productRecipient.getBalance() + transactionAmount;
         productSender.setBalance(senderBalanceModified);
         productSender.setAvailableBalance(getAvailableBalance(senderBalanceModified, productSender.getGmfExempt(), productSender.getAccountType()));

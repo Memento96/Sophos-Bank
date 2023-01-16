@@ -34,4 +34,8 @@ export class UserFormComponent implements OnInit {
     console.log(this.form.value)
   }
 
+  resetForm() {
+    this.form.reset();
+  }
+
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of } from 'rxjs';
 import {ProductsService} from "../../../../core/services/products.service";
 
 @Component({
@@ -13,6 +13,8 @@ export class ListProductClientComponent implements OnInit {
   list$: Observable<any>;
   
   form: FormGroup;
+  
+  errorMessage: string;
 
   constructor(private productService: ProductsService, 
               private fb: FormBuilder) { }
@@ -25,7 +27,12 @@ export class ListProductClientComponent implements OnInit {
 
   getProductId(): void{
     const id = this.form.value
-    this.list$ = this.productService.getProductsByClient(id.productId);
+    this.list$ = this.productService.getProductsByClient(id.productId).pipe(
+      catchError(error => {
+        this.errorMessage = error?.error.message;
+        return of(null);
+      })
+      );
   }
 
 }

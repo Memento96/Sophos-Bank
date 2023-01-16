@@ -8,6 +8,8 @@ import { ProductsService } from 'src/app/core/services/products.service';
   styleUrls: ['./withdrawal.component.scss']
 })
 export class WithdrawalComponent implements OnInit {
+  
+  error: any
 
   form: FormGroup;
 
@@ -34,13 +36,20 @@ export class WithdrawalComponent implements OnInit {
 
     this.productServices.createTransaction(body).subscribe({
       next: () => {
-        console.log("The withdrawal has been succesful")
+        console.log("The withdrawal has been successful")
+        alert("The withdrawal has been successful")
       },
       error: (e) => {
-        console.log(e.error.error);
+        this.error = e
+        console.log(e?.error?.error);
+        console.log(e)
       },
       complete: () => console.log('done'),
     });
+  }
+
+  resetForm() {
+    this.form.reset();
   }
 
 }

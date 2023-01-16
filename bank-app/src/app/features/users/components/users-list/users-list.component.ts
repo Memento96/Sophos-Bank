@@ -17,8 +17,6 @@ export class UsersListComponent implements OnInit {
 
     this.list$ = this.productService.getAllClients()
 
-    // this.productService.getAllClients().subscribe((r) => {this.list$ = r})
-
   }
 
 }

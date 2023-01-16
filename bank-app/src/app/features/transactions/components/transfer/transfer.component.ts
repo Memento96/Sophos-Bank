@@ -9,6 +9,8 @@ import { ProductsService } from 'src/app/core/services/products.service';
 })
 export class TransferComponent implements OnInit {
 
+  error: any
+
   form: FormGroup;
 
   constructor(private productServices: ProductsService,
@@ -37,12 +39,19 @@ export class TransferComponent implements OnInit {
     this.productServices.createTransaction(body).subscribe({
       next: () => {
         console.log("The transaction has been succesful")
+        alert("The transaction has been succesful")
       },
       error: (e) => {
-        console.log(e.error.error);
+        this.error = e
+        console.log(e?.error?.error);
+        console.log(e)
       },
       complete: () => console.log('done'),
     });
+  }
+  
+  resetForm() {
+    this.form.reset();
   }
 
 }

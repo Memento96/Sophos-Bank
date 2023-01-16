@@ -9,6 +9,8 @@ import { ProductsService } from 'src/app/core/services/products.service';
 })
 export class CreateUserComponent implements OnInit {
 
+  error: any
+
   constructor(private productService: ProductsService) { }
 
   ngOnInit(): void {
@@ -20,9 +22,12 @@ export class CreateUserComponent implements OnInit {
       this.productService.createClient(data).subscribe({
             next: () => {
               console.log("Client has been successfuly created")
+              alert("Client has been successfuly created")
             },
             error: (e) => {
-              console.log(e.error.error);
+              this.error = e
+              console.log(e?.error?.error);
+              console.log(e)
             },
             complete: () => console.log('done'),
           });

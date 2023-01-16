@@ -1,4 +1,8 @@
-<div class="create-user">
+<div class="create-user container">
   <p class="h1">Create user</p>
   <app-user-form (formData)="create($event)"></app-user-form>
+  <br>
+  <div class="alert alert-danger" role="alert" *ngIf="error?.error.message">
+    <span >{{error?.error.message}}</span>
+  </div>  
 </div>

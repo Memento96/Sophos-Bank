@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.sophos.bootcamp.bankapi.entities.enums.AccountType.CHECKING;
+import static com.sophos.bootcamp.bankapi.entities.enums.AccountType.SAVINGS;
 
 public class BankUtils {
 
@@ -19,15 +20,19 @@ public class BankUtils {
     }
 
     public static Double getAvailableBalance(Double balance, Boolean gmfExempt, AccountType accountType) {
-        if (gmfExempt == false) {
-            if(CHECKING.equals(accountType)){
+            if(CHECKING.equals(accountType) && gmfExempt == false){
                 double gmf = (AVAILABLE_BALANCE_CHECKING_ACCOUNT + balance) / 1000 * 4;
                 return AVAILABLE_BALANCE_CHECKING_ACCOUNT + balance - gmf;
-            } else {
+            } else if (CHECKING.equals(accountType) && gmfExempt == true){
+                double availableBalance = AVAILABLE_BALANCE_CHECKING_ACCOUNT + balance;
+                return availableBalance;
+            } else if (SAVINGS.equals(accountType) && gmfExempt == false) {
                 double gmf = balance / 1000 * 4;
                 return balance - gmf;
+            } else if (SAVINGS.equals(accountType) && gmfExempt == true){
+                return balance;
             }
-        } else return balance;
+            return balance;
     }
 
     public static Boolean validateEmailAddress(String email) {

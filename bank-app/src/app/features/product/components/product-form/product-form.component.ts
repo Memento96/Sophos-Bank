@@ -43,6 +43,8 @@ export class ProductFormComponent implements OnInit {
     console.log('error')
   }
 
-
+  resetForm() {
+    this.form.reset();
+  }
 
 }

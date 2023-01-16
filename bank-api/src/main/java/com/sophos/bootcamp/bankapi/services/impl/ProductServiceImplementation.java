@@ -42,11 +42,13 @@ public class ProductServiceImplementation implements ProductService {
         boolean hasGmfActive = byAccountCreatorId.stream()
                 .filter((p) -> p.getGmfExempt().equals(true))
                 .collect(Collectors.toList()).isEmpty();
-        if(!hasGmfActive){
+        if(!hasGmfActive) {
             product.setGmfExempt(false);
         }
+        if(findClient.getIsDeleted().equals(true)){
+            throw new BadRequestException("This client has been deleted and can no longer create accounts");
+        }
         product.setAccountCreator(findClient);
-        product.setAccountStatus(AccountStatus.ACTIVE);
         product.setBalance(0.0);
         product.setAvailableBalance(BankUtils.getAvailableBalance(0.0, product.getGmfExempt(), product.getAccountType()));
         product.setCreationDate(new Date());
@@ -89,7 +91,11 @@ public class ProductServiceImplementation implements ProductService {
             throw new BadRequestException("Account can not be closed as it has a balance");
         }
 
+        productExists.setGmfExempt(product.getGmfExempt());
         productExists.setAccountStatus(product.getAccountStatus());
+        product.setAccountType(product.getAccountType());
+        productExists.setAvailableBalance(BankUtils.getAvailableBalance(productExists.getBalance(), productExists.getGmfExempt(),
+                productExists.getAccountType()));
         //Validates if Client has any products with GMF exempt
         if (product.getGmfExempt() && (product.getGmfExempt() != productExists.getGmfExempt())){
             List<Product> productsByClient = productRepository.findAllByAccountCreatorId(productExists.getAccountCreator().getId());
@@ -106,9 +112,8 @@ public class ProductServiceImplementation implements ProductService {
         if (CANCELLED.equals(product.getAccountStatus())){
             product.setGmfExempt(false);
         }
-        productExists.setAvailableBalance(BankUtils.getAvailableBalance(productExists.getBalance(), product.getGmfExempt(),
-                product.getAccountType()));
-        productExists.setGmfExempt(product.getGmfExempt());
+
+
         Product modifiedProduct = productRepository.save(productExists);
         return modifiedProduct;
     }

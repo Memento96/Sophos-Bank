@@ -18,9 +18,10 @@ export class ListComponent implements  OnInit, OnDestroy {
     this.columnsName = Object.getOwnPropertyNames(this.list[0])
   }
 
-  addItem(item: any, name:any, index:number){
+  addItem(item: any, index:number){
     const a = this.list.indexOf(item)
     const b = Object.values(this.list[a])
+    console.log(b)
     return b[index]
   }
 

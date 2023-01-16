@@ -4,9 +4,17 @@
     <input type="text" class="form-control" formControlName="productId" placeholder="Provide product ID">
     <br>
     <button type="submit" class="btn btn-primary">Look for product to modify</button>
+    <br>
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
   </form>
   <br>
   <ng-container *ngIf="product$ | async as product">
     <app-product-form [isModify]="true" (formData)="modify($event)" [product]="product"></app-product-form>
   </ng-container>
+  <br>
+  <div class="alert alert-danger" role="alert" *ngIf="error?.error.message">
+    <span >{{error?.error.message}}</span>
+  </div>
 </div>

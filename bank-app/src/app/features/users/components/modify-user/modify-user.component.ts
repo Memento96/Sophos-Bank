@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 import { ProductsService } from 'src/app/core/services/products.service';
 
 @Component({
@@ -10,9 +10,13 @@ import { ProductsService } from 'src/app/core/services/products.service';
 })
 export class ModifyUserComponent implements OnInit {
 
+  error: any
+
   form: FormGroup;
   
   user$: Observable<any>
+
+  errorMessage: string;
 
   constructor(private productService: ProductsService,
               private fb: FormBuilder) { }
@@ -23,19 +27,28 @@ export class ModifyUserComponent implements OnInit {
     })
   }
 
-  getClientById(): void{
-    const id = this.form.get('clientId')?.value
-    this.user$ = this.productService.getClientById(id)
+  getClientById(): void {
+    const id = this.form.get('clientId')?.value;
+    this.user$ = this.productService.getClientById(id).pipe(
+      catchError(error => {
+        this.errorMessage = error?.error.message;
+        return of(null);
+      })
+      );
   }
+
 
   modify(data:any){
     const id = this.form.get('clientId')?.value
     this.productService.modifyClient(data, id).subscribe({
       next: () => {
         console.log("Client has been successfuly modified")
+        alert("Client has been successfuly modified")
       },
       error: (e) => {
-        console.log(e.error.error);
+        this.error = e
+        console.log(e?.error?.error);
+        console.log(e)
       },
       complete: () => console.log('done'),
     });
@@ -52,6 +65,10 @@ export class ModifyUserComponent implements OnInit {
       },
       complete: () => console.log('done'),
     });
+  }
+
+  resetForm() {
+    this.form.reset();
   }
 
 }
