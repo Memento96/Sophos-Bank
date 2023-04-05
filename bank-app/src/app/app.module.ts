@@ -9,6 +9,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HTTP_INTERCEPTORS} from "@angular/common/http";
 import { HeaderfooterModule } from './features/headerfooter/headerfooter.module';
 import { Observable } from 'rxjs';
+import { LoginModule } from './features/login/login.module';
 
 
 @Injectable()
@@ -34,7 +35,7 @@ export class NoopInterceptor implements HttpInterceptor {
     ProductModule,
     ReactiveFormsModule,
     HttpClientModule,
-    HeaderfooterModule
+    HeaderfooterModule,
   ],
   providers: [ProductModule, { provide: HTTP_INTERCEPTORS, useClass: NoopInterceptor, multi: true }],
   bootstrap: [AppComponent]
