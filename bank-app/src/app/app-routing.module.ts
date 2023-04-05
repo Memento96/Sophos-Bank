@@ -21,6 +21,11 @@ const routes: Routes = [
     path: 'transactions',
     loadChildren: () =>
       import('./features/transactions/transactions.module').then((m) => m.TransactionsModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./features/login/login.module').then((m) => m.LoginModule)
   }
 ];
 
