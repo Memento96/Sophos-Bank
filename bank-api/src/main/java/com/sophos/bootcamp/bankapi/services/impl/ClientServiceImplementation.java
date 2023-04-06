@@ -33,10 +33,11 @@ public class ClientServiceImplementation implements ClientService {
 
     @Override
     public Optional<Client> findClientById(Long id) {
-        if (clientRepository.findById(id).isEmpty()) {
+        Optional<Client> maybeClient = clientRepository.findById(id);
+        if (maybeClient.isEmpty()) {
             throw new NotFoundException("Client does not exist");
         }
-        return clientRepository.findById(id);
+        return maybeClient;
     }
 
     @Override
@@ -69,7 +70,6 @@ public class ClientServiceImplementation implements ClientService {
     }
 
     @Override
-    //TODO create a DTO for client modification
     public Client modifyClient(Client client) {
         Client clientExists = clientRepository.findById(client.getId()).orElseThrow(() -> new NotFoundException("This client does not exist in the system"));
         clientExists.setNames(client.getNames());
