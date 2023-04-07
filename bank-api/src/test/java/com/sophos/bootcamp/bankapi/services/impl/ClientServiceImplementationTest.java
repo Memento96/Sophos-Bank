@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -74,16 +75,35 @@ class ClientServiceImplementationTest {
     }
 
     @Test
+    void createClientWithAGenericMock() {
+        Client client = new Client();
+        client.setEmailAddress("scifi@gmail.com");
+        client.setDateOfBirth(LocalDate.of(1990, 1, 1));
+        client.setNames("Philip");
+        client.setLastNames("K. Dick");
+
+        //when
+        when(clientRepository.save(any())).thenReturn(client);
+
+        Client result = clientService.createClient(client);
+
+        assertEquals(client, result);
+    }
+
+    @Test
     void createClient_ThrowsClientExistsException() {
+        //give
         Client existingClient = new Client();
         existingClient.setId(1l);
 
         //when
-        when(clientRepository.findByIdNumber(existingClient.getIdNumber())).thenReturn(Optional.of(existingClient));
+        when(clientRepository.findByIdNumber(existingClient.getIdNumber()))
+                .thenReturn(Optional.of(existingClient));
 
         Client badClient = new Client();
         badClient.setId(existingClient.getId());
 
+        //then
         assertThrows(BadRequestException.class, () -> {
             clientService.createClient(existingClient);
         });
@@ -154,6 +174,17 @@ class ClientServiceImplementationTest {
     }
 
     @Test
+    void getAllClientsThrowsException() {
+
+        //when
+        when(clientRepository.findAll()).thenThrow(new BadRequestException());
+
+        assertThrows(BadRequestException.class, () -> {
+            clientService.getAllClients();
+        });
+    }
+
+    @Test
     void modifyClient() {
         Client client = new Client();
         client.setId(1l);
@@ -168,7 +199,6 @@ class ClientServiceImplementationTest {
         Client result = clientService.modifyClient(client);
 
         assertEquals(client, result);
-
     }
 
     @Test
@@ -182,7 +212,6 @@ class ClientServiceImplementationTest {
         assertThrows(NotFoundException.class, () -> {
             clientService.modifyClient(client);
         });
-
     }
 
     @Test
@@ -200,7 +229,6 @@ class ClientServiceImplementationTest {
         assertThrows(BadRequestException.class, () -> {
             clientService.modifyClient(client);
         });
-
     }
 
 
@@ -216,8 +244,10 @@ class ClientServiceImplementationTest {
 
         Boolean result = clientService.deleteClientById(client.getId());
 
-        assertTrue(true);
-
+        //Whatever of this three options can be used to test the function
+        assertTrue(result);
+        assertEquals(true, result);
+        assertEquals(Boolean.TRUE, result);
     }
 
     @Test
@@ -232,7 +262,6 @@ class ClientServiceImplementationTest {
         assertThrows(NotFoundException.class, () -> {
             clientService.deleteClientById(client.getId());
         });
-
     }
 
     @Test
@@ -252,7 +281,5 @@ class ClientServiceImplementationTest {
         assertThrows(BadRequestException.class, () -> {
             clientService.deleteClientById(client.getId());
         });
-
-
     }
 }

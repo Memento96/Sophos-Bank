@@ -5,6 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -23,15 +24,18 @@ public class Client {
     @Column(name = "id_number")
     private String idNumber;
 
+    @NotNull
     @Column(name = "names")
     private String names;
 
+    @NotNull
     @Column(name = "last_names")
     private String lastNames;
 
     @Column(name = "email_address")
     private String emailAddress;
 
+    @NotNull
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
 

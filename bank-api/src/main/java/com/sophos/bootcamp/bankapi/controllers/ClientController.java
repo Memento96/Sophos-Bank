@@ -10,9 +10,12 @@ import com.sophos.bootcamp.bankapi.services.ClientService;
 import com.sophos.bootcamp.bankapi.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -29,9 +32,12 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> createClient(@RequestBody Client client) {
+    public ResponseEntity<Client> createClient(@Validated @RequestBody Client client) {
         if (client.getId() != null){
-            throw new IllegalArgumentException("Do not provide ID number, this will be automatically created by the system");
+            throw new BadRequestException("Do not provide ID number, this will be automatically created by the system");
+        }
+        if(Objects.isNull(client.getDateOfBirth())){
+            throw new BadRequestException("Date of birth not provided");
         }
         Client clientCreated = clientService.createClient(client);
         return new ResponseEntity<>(clientCreated, HttpStatus.OK);

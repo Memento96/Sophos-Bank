@@ -37,7 +37,6 @@ class ProductServiceImplementationTest {
         productService = new ProductServiceImplementation(productRepository, clientRepository);
     }
 
-
     @Test
     void getAccountNumber() {
 
@@ -47,7 +46,6 @@ class ProductServiceImplementationTest {
 
         String accountNumber2 = productService.getAccountNumber("11", "35");
         Assertions.assertEquals("1100000035", accountNumber2);
-
     }
 
     @Test
@@ -64,7 +62,6 @@ class ProductServiceImplementationTest {
         Product result = productService.createProduct(product);
 
         assertEquals(product, result);
-
     }
 
     @Test
@@ -80,7 +77,6 @@ class ProductServiceImplementationTest {
         assertThrows(NotFoundException.class, () -> {
             productService.createProduct(product);
         });
-
     }
 
     @Test
@@ -144,26 +140,63 @@ class ProductServiceImplementationTest {
     void getAllProductsByClientId() {
         Client client = new Client();
         client.setId(1l);
-
-
-
+        List<Product> products = new ArrayList<>();
 
 
         //when
         when(clientRepository.findById(anyLong())).thenReturn(Optional.of(client));
+        when(productRepository.findAllByAccountCreatorId(anyLong())).thenReturn(products);
 
+        List<Product> result = productService.getAllProductsByClientId(client.getId());
 
+        assertEquals(products, result);
+    }
 
-        assertEquals(product, productList);
+    @Test
+    void getAllProductsByClientId_ClientDoesNotExist() {
+        Client client = new Client();
+        client.setId(1l);
 
+        //when
+        when(clientRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> {
+            productService.getAllProductsByClientId(client.getId());
+        });
     }
 
     @Test
     void getProductById() {
+        Product product = new Product();
+        product.setId(1l);
+        Optional<Product> products = Optional.of(product);
+
+        //when
+        when(productRepository.findById(anyLong())).thenReturn(Optional.of(product));
+
+        Optional<Product> result = productService.getProductById(product.getId());
+
+        assertEquals(products, result);
+    }
+
+    @Test
+    void getProductById_ProductDoesNotExistError() {
+        Product product = new Product();
+        product.setId(1l);
+
+        //when
+        when(productRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> {
+            productService.getProductById(product.getId());
+        });
     }
 
     @Test
     void modifyProduct() {
+        Product product = new Product();
+                
+
     }
 
     @Test

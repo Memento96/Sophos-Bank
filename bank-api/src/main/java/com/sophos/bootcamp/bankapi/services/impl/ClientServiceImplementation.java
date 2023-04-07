@@ -66,7 +66,11 @@ public class ClientServiceImplementation implements ClientService {
 
     @Override
     public List<Client> getAllClients() {
-        return clientRepository.findAll();
+        try{
+            return clientRepository.findAll();
+        } catch (Exception e){
+            throw e;
+        }
     }
 
     @Override
@@ -105,6 +109,5 @@ public class ClientServiceImplementation implements ClientService {
             return true;
         } else return false;
     }
-
 
 }
