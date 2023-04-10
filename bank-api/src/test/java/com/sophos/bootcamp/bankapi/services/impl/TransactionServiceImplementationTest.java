@@ -2,6 +2,7 @@ package com.sophos.bootcamp.bankapi.services.impl;
 
 import com.sophos.bootcamp.bankapi.entities.Product;
 import com.sophos.bootcamp.bankapi.entities.Transaction;
+import com.sophos.bootcamp.bankapi.entities.enums.AccountStatus;
 import com.sophos.bootcamp.bankapi.entities.enums.AccountType;
 import com.sophos.bootcamp.bankapi.entities.enums.TransactionType;
 import com.sophos.bootcamp.bankapi.exceptions.BadRequestException;
@@ -216,6 +217,113 @@ class TransactionServiceImplementationTest {
         });
 
         assertEquals("Insufficient funds", notFundsException.getMessage());
+
+    }
+
+    @Test
+    void processTransferTransaction_CheckingNoFunds() {
+        Product productSender = new Product();
+        productSender.setId(1l);
+        productSender.setAccountType(AccountType.CHECKING);
+        productSender.setGmfExempt(true);
+        productSender.setBalance(-3000000d);
+
+        Product productRecipient = new Product();
+        productRecipient.setId(2l);
+        productRecipient.setAccountType(AccountType.SAVINGS);
+        productRecipient.setGmfExempt(true);
+        productRecipient.setBalance(15000d);
+
+        Transaction transferTransaction = new Transaction();
+        transferTransaction.setTransactionType(TransactionType.TRANSFER);
+        transferTransaction.setRecipient(productRecipient);
+        transferTransaction.setSender(productSender);
+        transferTransaction.setTransactionAmount(1000d);
+
+        //when
+        when(productRepository.findById(productSender.getId())).thenReturn(Optional.of(productSender));
+        when(productRepository.findById(productRecipient.getId())).thenReturn(Optional.of(productRecipient));
+        when(productRepository.save(productRecipient)).thenReturn(productRecipient);
+        when(productRepository.save(productSender)).thenReturn(productSender);
+        when(transactionRepository.save(transferTransaction)).thenReturn(transferTransaction);
+
+        BadRequestException notFundsException = assertThrows(BadRequestException.class, () -> {
+            transactionService.createTransaction(transferTransaction);
+        });
+
+        assertEquals("Insufficient funds", notFundsException.getMessage());
+
+    }
+
+    @Test
+    void processTransferTransaction_SenderInactive() {
+        Product productSender = new Product();
+        productSender.setId(1l);
+        productSender.setAccountType(AccountType.SAVINGS);
+        productSender.setGmfExempt(true);
+        productSender.setBalance(40000d);
+        productSender.setAccountStatus(AccountStatus.INACTIVE);
+
+        Product productRecipient = new Product();
+        productRecipient.setId(2l);
+        productRecipient.setAccountType(AccountType.CHECKING);
+        productRecipient.setGmfExempt(true);
+        productRecipient.setBalance(15000d);
+
+        Transaction transferTransaction = new Transaction();
+        transferTransaction.setTransactionType(TransactionType.TRANSFER);
+        transferTransaction.setRecipient(productRecipient);
+        transferTransaction.setSender(productSender);
+        transferTransaction.setTransactionAmount(1000d);
+
+        //when
+        when(productRepository.findById(productSender.getId())).thenReturn(Optional.of(productSender));
+        when(productRepository.findById(productRecipient.getId())).thenReturn(Optional.of(productRecipient));
+        when(productRepository.save(productRecipient)).thenReturn(productRecipient);
+        when(productRepository.save(productSender)).thenReturn(productSender);
+        when(transactionRepository.save(transferTransaction)).thenReturn(transferTransaction);
+
+        BadRequestException notFundsException = assertThrows(BadRequestException.class, () -> {
+            transactionService.createTransaction(transferTransaction);
+        });
+
+        assertEquals("This account can not complete debit transactions", notFundsException.getMessage());
+
+    }
+
+    @Test
+    void processTransferTransaction_RecipientCancelled() {
+        Product productSender = new Product();
+        productSender.setId(1l);
+        productSender.setAccountType(AccountType.SAVINGS);
+        productSender.setGmfExempt(true);
+        productSender.setBalance(40000d);
+
+        Product productRecipient = new Product();
+        productRecipient.setId(2l);
+        productRecipient.setAccountType(AccountType.CHECKING);
+        productRecipient.setGmfExempt(true);
+        productRecipient.setBalance(0d);
+        productRecipient.setAccountStatus(AccountStatus.CANCELLED);
+
+        Transaction transferTransaction = new Transaction();
+        transferTransaction.setTransactionType(TransactionType.TRANSFER);
+        transferTransaction.setRecipient(productRecipient);
+        transferTransaction.setSender(productSender);
+        transferTransaction.setTransactionAmount(1000d);
+
+        //when
+        when(productRepository.findById(productSender.getId())).thenReturn(Optional.of(productSender));
+        when(productRepository.findById(productRecipient.getId())).thenReturn(Optional.of(productRecipient));
+        when(productRepository.save(productRecipient)).thenReturn(productRecipient);
+        when(productRepository.save(productSender)).thenReturn(productSender);
+        when(transactionRepository.save(transferTransaction)).thenReturn(transferTransaction);
+
+        BadRequestException notFundsException = assertThrows(BadRequestException.class, () -> {
+            transactionService.createTransaction(transferTransaction);
+        });
+
+        assertEquals("This account can not complete credit transactions", notFundsException.getMessage());
 
     }
 
