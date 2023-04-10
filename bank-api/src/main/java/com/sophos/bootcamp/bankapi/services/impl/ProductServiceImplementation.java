@@ -87,17 +87,17 @@ public class ProductServiceImplementation implements ProductService {
         if (CANCELLED.equals(productExists.getAccountStatus())){
             throw new BadRequestException("This account can not be modified as it has already been cancelled");
         }
-        if (CANCELLED.equals(product.getAccountStatus()) && (productExists.getBalance() < 0 || productExists.getBalance() > 1)) {
+        if (CANCELLED.equals(product.getAccountStatus()) && productExists.getBalance() != 0 ) {
             throw new BadRequestException("Account can not be closed as it has a balance");
         }
 
-        productExists.setGmfExempt(product.getGmfExempt());
         productExists.setAccountStatus(product.getAccountStatus());
         product.setAccountType(product.getAccountType());
         productExists.setAvailableBalance(BankUtils.getAvailableBalance(productExists.getBalance(), productExists.getGmfExempt(),
                 productExists.getAccountType()));
         //Validates if Client has any products with GMF exempt
         if (product.getGmfExempt() && (product.getGmfExempt() != productExists.getGmfExempt())){
+            productExists.setGmfExempt(product.getGmfExempt());
             List<Product> productsByClient = productRepository.findAllByAccountCreatorId(productExists.getAccountCreator().getId());
             List<Product> productWithGmfExempt = productsByClient.stream()
                     .filter(p -> p.getId() != productExists.getId())

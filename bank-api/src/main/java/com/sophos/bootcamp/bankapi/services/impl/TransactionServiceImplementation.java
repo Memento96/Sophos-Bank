@@ -38,6 +38,9 @@ public class TransactionServiceImplementation implements TransactionService {
 
     @Override
     public Optional<Transaction> findTransactionById(Long id) {
+        if (transactionRepository.findById(id).isEmpty()){
+            throw new NotFoundException("Transaction does not exist");
+        }
         return transactionRepository.findById(id);
     }
 
@@ -62,9 +65,9 @@ public class TransactionServiceImplementation implements TransactionService {
 
     private Transaction processTransferTransaction(Transaction transaction) {
         Product productSender = productRepository.findById(transaction.getSender().getId())
-                .orElseThrow(() -> new NotFoundException("This product does not exist"));
+                .orElseThrow(() -> new NotFoundException("Sender does not exist"));
         Product productRecipient = productRepository.findById(transaction.getRecipient().getId())
-                .orElseThrow(() -> new NotFoundException("This product does not exist"));
+                .orElseThrow(() -> new NotFoundException("Recipient does not exist"));
         transaction.setModificationDate(new Date());
         Double transactionAmount = transaction.getTransactionAmount();
 
@@ -73,9 +76,11 @@ public class TransactionServiceImplementation implements TransactionService {
         Double senderBalanceModified = productSender.getBalance() - transactionAmountWithGmf;
         Double recipientBalanceModified = productRecipient.getBalance() + transactionAmount;
         productSender.setBalance(senderBalanceModified);
-        productSender.setAvailableBalance(getAvailableBalance(senderBalanceModified, productSender.getGmfExempt(), productSender.getAccountType()));
+        productSender.setAvailableBalance(getAvailableBalance(senderBalanceModified, productSender.getGmfExempt(),
+                productSender.getAccountType()));
         productRecipient.setBalance(recipientBalanceModified);
-        productRecipient.setAvailableBalance(getAvailableBalance(recipientBalanceModified, productRecipient.getGmfExempt(), productRecipient.getAccountType()));
+        productRecipient.setAvailableBalance(getAvailableBalance(recipientBalanceModified, productRecipient.getGmfExempt(),
+                productRecipient.getAccountType()));
         transaction.setRecipientBalance(recipientBalanceModified);
         transaction.setSenderBalance(senderBalanceModified);
 
