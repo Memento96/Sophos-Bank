@@ -32,12 +32,12 @@ public class ClientServiceImplementation implements ClientService {
     }
 
     @Override
-    public Optional<Client> findClientById(Long id) {
+    public Client findClientById(Long id) {
         Optional<Client> maybeClient = clientRepository.findById(id);
         if (maybeClient.isEmpty()) {
             throw new NotFoundException("Client does not exist");
         }
-        return maybeClient;
+        return maybeClient.orElse(null);
     }
 
     @Override

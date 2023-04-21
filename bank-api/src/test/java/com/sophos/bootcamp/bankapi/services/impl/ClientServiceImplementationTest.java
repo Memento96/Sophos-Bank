@@ -45,8 +45,8 @@ class ClientServiceImplementationTest {
         //when
         when(clientRepository.findById(anyLong())).thenReturn(Optional.of(clientExpected));
 
-        Optional<Client> clientById = clientService.findClientById(1l);
-        assertEquals(clientExpected, clientById.get());
+        Client clientById = clientService.findClientById(1l);
+        assertEquals(clientExpected, clientById);
     }
 
     @Test
