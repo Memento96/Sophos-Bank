@@ -25,7 +25,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+//@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
@@ -39,12 +39,14 @@ public class ClientControllerTest {
     private ProductRepository productRepository;
 
     @Test
-    @Order(1)
+    //@Order(1)
+    //TODO validate the client information @Validated study with DTOs
     public void createClient(){
         Client client1 = new Client();
         client1.setNames("Marcus");
         client1.setLastNames("Junius Brutus");
         client1.setEmailAddress("stabintheback@caesar.com");
+        client1.setIdNumber("1234");
         client1.setDateOfBirth(LocalDate.of(1990,06,06));
 
         ResponseEntity<Client> clientResponseEntity = restTemplate.postForEntity(
@@ -54,12 +56,6 @@ public class ClientControllerTest {
         );
 
         Client responseEntityBody = clientResponseEntity.getBody();
-        System.out.println(client1.getEmailAddress() + responseEntityBody.getEmailAddress());
-        System.out.println(client1.getLastNames() + responseEntityBody.getLastNames());
-        System.out.println(client1.getNames() + responseEntityBody.getNames());
-        System.out.println(responseEntityBody.getDateOfBirth());
-        System.out.println(clientResponseEntity.getStatusCode());
-
 
         assertAll("Asserts for client creation",
                 () -> assertEquals(HttpStatus.OK, clientResponseEntity.getStatusCode()),
@@ -69,13 +65,35 @@ public class ClientControllerTest {
                 () -> assertEquals(client1.getDateOfBirth(), responseEntityBody.getDateOfBirth())
         );
 
+    }
+
+    @Test
+    public void createClient_NoIdNumberProducesError(){
+        Client client1 = new Client();
+        client1.setNames("Marcus");
+        client1.setLastNames("Junius Brutus");
+        client1.setEmailAddress("stabintheback@caesar.com");
+        client1.setIdNumber("1234");
+        client1.setDateOfBirth(LocalDate.of(1990,06,06));
+
+        ResponseEntity<Client> clientResponseEntity = restTemplate.postForEntity(
+                "/client",
+                client1,
+                Client.class
+        );
+
+        Client responseEntityBody = clientResponseEntity.getBody();
+
+        assertAll("Asserts for client creation",
+                () -> assertEquals(HttpStatus.BAD_REQUEST, clientResponseEntity.getStatusCode(), "You shouldn't send the ID number")
+        );
 
     }
 
 
     @Test
-    @Order(2)
-    public void createClient_IdWasProvidedError(){
+    //@Order(2)
+    public void createClient_SentIdProduceError(){
         Client client = new Client();
         client.setId(1l);
         client.setNames("Marcus");
@@ -90,10 +108,9 @@ public class ClientControllerTest {
 
 
     @Test
-    @Order(3)
+    //@Order(3)
     public void createClient_DoBNotProvidedError(){
         Client client = new Client();
-        client.setId(1l);
         client.setNames("Marcus");
         client.setLastNames("Junius Brutus");
         client.setEmailAddress("stabintheback@caesar.com");
@@ -107,10 +124,9 @@ public class ClientControllerTest {
 
 
     @Test
-    @Order(4)
+    //@Order(4)
     public void getAllClientsTest(){
         Client client = new Client();
-        client.setId(1l);
         client.setNames("Marcus");
         client.setLastNames("Junius Brutus");
         client.setEmailAddress("stabintheback@caesar.com");
@@ -134,18 +150,17 @@ public class ClientControllerTest {
     }
 
     @Test
-    @Order(5)
+    //@Order(5)
     public void getClientByIdTest(){
         Client client = new Client();
-        client.setId(1l);
         client.setNames("Marcus");
         client.setLastNames("Junius Brutus");
         client.setEmailAddress("stabintheback@caesar.com");
         client.setDateOfBirth(LocalDate.of(1990,06,06));
-        clientRepository.save(client);
+        Client clientSaved = clientRepository.save(client);
 
         ResponseEntity<Client> clientResponseEntity = restTemplate.getForEntity(
-                "/client/" + client.getId(),
+                "/client/" + clientSaved.getId(),
                 Client.class);
 
         assertAll("Assert GET request",
@@ -190,31 +205,30 @@ public class ClientControllerTest {
 //                new ParameterizedTypeReference<List<Product>>(){}
 //        );
 //
-//
 //        assertAll("Asserting the results of the test",
 //                () -> assertEquals(HttpStatus.OK, productResponseEntity.getStatusCode())
 //        );
 //
-//
 //    }
 
     @Test
-    @Order(6)
+    //@Order(6)
     public void modifyClientTest (){
         Client client = new Client();
-        client.setId(1l);
         client.setNames("Marcus");
         client.setLastNames("Junius Brutus");
         client.setEmailAddress("stabintheback@caesar.com");
         client.setDateOfBirth(LocalDate.of(1990,06,06));
-        clientRepository.save(client);
+        client = clientRepository.save(client);
+
+        Client clientModified = client;
         String newEmail = "newemail@gmail.com";
-        client.setEmailAddress(newEmail);
+        clientModified.setEmailAddress(newEmail);
 
         String url = "/client";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<Client> requestEntity = new HttpEntity<>(client, headers);
+        HttpEntity<Client> requestEntity = new HttpEntity<>(clientModified, headers);
         ResponseEntity<Client> clientResponseEntity = restTemplate.exchange(
                 url,
                 HttpMethod.PUT,
@@ -222,11 +236,11 @@ public class ClientControllerTest {
                 Client.class
         );
 
-        Client modifiedClient = clientResponseEntity.getBody();
+        Client responseClient = clientResponseEntity.getBody();
         assertAll("Assert for the controller",
                 () -> assertEquals(HttpStatus.OK, clientResponseEntity.getStatusCode()),
-                () -> assertEquals(newEmail, modifiedClient.getEmailAddress()),
-                () -> assertEquals(client.getId(), modifiedClient.getId())
+                () -> assertEquals(newEmail, responseClient.getEmailAddress()),
+                () -> assertEquals(clientModified.getId(), responseClient.getId())
         );
     }
 

@@ -39,6 +39,9 @@ public class ClientController {
         if(Objects.isNull(client.getDateOfBirth())){
             throw new BadRequestException("Date of birth not provided");
         }
+        if(Objects.isNull(client.getIdNumber())){
+            throw new BadRequestException("Please provide an ID number for this client");
+        }
         Client clientCreated = clientService.createClient(client);
         return new ResponseEntity<>(clientCreated, HttpStatus.OK);
     }

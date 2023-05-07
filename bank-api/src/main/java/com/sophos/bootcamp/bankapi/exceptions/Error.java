@@ -15,4 +15,5 @@ public class Error {
         this.message = message;
         this.date = LocalDate.now();
     }
+
 }
